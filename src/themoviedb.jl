@@ -1,18 +1,40 @@
 module themoviedb
 
+using Arrow
 using HTTP
 using JSON3
+using TypedTables
 
 include("types.jl")
+include("search.jl")
+include("collection.jl")
+include("genre.jl")
+include("company.jl")
+include("movie.jl")
+include("person.jl")
 
 const query = Dict{String,String}("api_key" => ENV["TMDB_API_KEY"])
+const api3 = "https://api.themoviedb.org/3"
 
-function getmovie(id::Integer)
-    resp = HTTP.get("https://api.themoviedb.org/3/movie/$id"; query)
-    if (resp.status ≠ 200)
-        throw(ArgumentError("id = $id returned status = $(resp.status)"))
-    end
-    return JSON3.read(resp.body)
-end
+export Collection,
+    Company,
+    Country,
+    Date,
+    ExternalIds,
+    Genre,
+    Genres,
+    Movie,
+    MovieCast,
+    MovieCredits,
+    MovieCrew,
+    Person,
+    PersonCast,
+    PersonCrew,
+    PersonMovieCredits,
+    SearchCollection,
+    SixDegrees,
 
+    filmography,
+    latestperson,
+    sixdegrees
 end
